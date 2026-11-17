@@ -1,5 +1,5 @@
 //CONEXÃO E IMPORTAÇÃO - NÃO APAGAR
-//base dedados e serviço de autenticação
+//base de dados e serviço de autenticação
 import { db, auth } from "./firebase-config.js";
 
 //métodos firestore
@@ -8,13 +8,15 @@ import { collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc, query, where
 //firebase authentication
 import { GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
 
+import { verificarOuCriarPerfil, carregarStatus, ganharRecompensa } from "./player.js";
+
 //Armazenar o cancelamento do ouvinte em tempo real do Firestore
 let desinscreverMural = null;
 
 //cartela de cores categoria
 const coresCategoria = {
     "mago": "bg-info text-dark",      // Azul arcano / ciano
-    "guerreiro": "bg-danger text-light",          // Vermelho sangue/combate
+    "guerreiro": "bg-danger text-light", // Vermelho sangue/combate
     "ladino": "bg-dark text-light",    // Sombra / furtividade
     "clerigo": "bg-warning text-dark"  // Dourado / luz sagrada
 };
@@ -66,12 +68,9 @@ function missoes() {
 
 //--- Listando as missões para o usuário
 function listarMissoes(usuarioId) {
-
-    let areaCards = document.getElementById("area-cards"); //capturando o mural e limpando
-
+    let areaCards = document.getElementById("area-cards");
     let consulta = query(collection(db, "missoes"), where("usuarioId", "==", usuarioId));
 
-    // Desativa escuta anterior se ela existir para evitar dados duplicados
     if (desinscreverMural) {
         desinscreverMural();
     }
@@ -83,31 +82,34 @@ function listarMissoes(usuarioId) {
         snapshot.forEach((doc) => {
             let missao = doc.data();
 
-            //identifica as cores correspondentes
             let corCategoria = coresCategoria[missao.categoria?.toLowerCase()] || "bg-secondary";
             let dificuldadeFormatada = missao.dificuldade ? missao.dificuldade.toLowerCase() : "";
             let corDificuldade = coresDificuldade[dificuldadeFormatada] || "bg-secondary";
 
-            //estilos visuais de validação da missão
             let textoRiscado = missao.concluida ? "text-decoration-line-through text-muted" : "";
             let textoBotao = missao.concluida ? "Desmarcar" : "Concluir";
             let estiloBotao = missao.concluida ? "btn-outline-secondary" : "btn-outline-success";
 
-            //monta os cards na tela
             areaCards.innerHTML += `
-    <div class="col-12 col-md-6 col-lg-4 mb-3">
-        <div class="card p-3 shadow-sm h-100">
-<h5 class="card-title ${textoRiscado}">${missao.titulo}</h5>
-            <div class="mt-2">
-                <span class="badge ${corCategoria}">${missao.categoria}</span>
-                <span class="badge ${corDificuldade}">${missao.dificuldade}</span>
-            </div>
-            <div class="d-flex gap-2 mt-3">
-<button class="btn-concluir btn btn-sm ${estiloBotao}" data-id="${doc.id}" data-status="${missao.concluida}">${textoBotao}</button>        
-<button class="btn-excluir btn btn-sm btn-outline-danger" data-id="${doc.id}">Excluir</button>
-</div>
-</div>
-    </div>`;
+            <div class="col-12 col-md-6 col-lg-4 mb-3">
+                <div class="card p-3 shadow-sm h-100">
+                    <h5 class="card-title ${textoRiscado}">${missao.titulo}</h5>
+                    <div class="mt-2">
+                        <span class="badge ${corCategoria}">${missao.categoria}</span>
+                        <span class="badge ${corDificuldade}">${missao.dificuldade}</span>
+                    </div>
+                    <div class="d-flex gap-2 mt-3">
+                        <button class="btn-concluir btn btn-sm ${estiloBotao}" 
+                            data-id="${doc.id}" 
+                            data-status="${missao.concluida}"
+                            data-dificuldade="${missao.dificuldade}"
+                            data-categoria="${missao.categoria}">
+                            ${textoBotao}
+                        </button>         
+                        <button class="btn-excluir btn btn-sm btn-outline-danger" data-id="${doc.id}">Excluir</button>
+                    </div>
+                </div>
+            </div>`;
         });
     });
 }
@@ -117,20 +119,28 @@ function gerenciarAcoesMural() {
     let mural = document.getElementById("area-cards");
 
     mural.addEventListener("click", async function (evento) {
-
         let elementoClicado = evento.target;
-        let id = elementoClicado.getAttribute("data-id")
+        let id = elementoClicado.getAttribute("data-id");
 
-        //concluir
+        // concluir
         if (elementoClicado.classList.contains("btn-concluir")) {
             let statusAtual = (elementoClicado.getAttribute("data-status") === "true");
             let novoStatus = !statusAtual;
+            let dificuldade = elementoClicado.getAttribute("data-dificuldade");
+            let categoria = elementoClicado.getAttribute("data-categoria");
 
             try {
                 let missaoRef = doc(db, "missoes", id);
                 await updateDoc(missaoRef, {
                     concluida: novoStatus
                 });
+
+                // Entrega a recompensa apenas quando a missão é marcada como concluída
+                if (novoStatus && auth.currentUser) {
+                    await ganharRecompensa(auth.currentUser.uid, dificuldade, categoria);
+                    carregarStatus(auth.currentUser.uid); // Atualiza o status/XP na tela
+                }
+
                 console.log("Status atualizado no Firebase com sucesso!");
             } catch (erro) {
                 console.error("Erro ao atualizar no Firebase:", erro);
@@ -149,7 +159,6 @@ function gerenciarAcoesMural() {
         }
     });
 }
-
 //--- gerenciando a autenticação de usuário
 function gerenciarAutenticacao() {
     let login = document.getElementById("btn-login");
@@ -178,14 +187,19 @@ function gerenciarAutenticacao() {
     });
 
     //atualiza a interface automaticamente
-    onAuthStateChanged(auth, (usuario) => {
+    onAuthStateChanged(auth, async (usuario) => {
         if (usuario) {
             // Coloca a foto redondinha e o nome na barra superior
             infoUsuario.innerHTML = `
-                <img src="${usuario.photoURL}" alt="${usuario.displayName}" class="rounded-circle" width="30" height="30" style="border: 2px solid var(--destaque-ciano);">
-                <span class="small fw-semibold text-light">${usuario.displayName}</span>
-            `;
+            <img src="${usuario.photoURL}" alt="${usuario.displayName}" class="rounded-circle" width="30" height="30" style="border: 2px solid var(--destaque-ciano);">
+            <span class="small fw-semibold text-light">${usuario.displayName}</span>
+        `;
 
+            //Verifica ou cria a ficha primeiro
+            await verificarOuCriarPerfil(usuario);
+            carregarStatus(usuario.uid);
+
+            //lista as missões
             listarMissoes(usuario.uid);
 
             // Esconde o botão "Entrar" e mostra o botão "Sair"

@@ -1,0 +1,48 @@
+.final {
+    border-top: 1px solid $cor-borda-escura;
+    background-color: $cor-fundo-cards;
+    padding: 2rem 1rem;
+    margin-top: 3rem;
+    text-align: center;
+
+    @media (min-width: 768px) {
+        padding: 2.5rem 2rem;
+        margin-top: 4rem;
+    }
+
+    @media (min-width: 1024px) {
+        padding: 3rem 1rem;
+        margin-top: 5rem;
+    }
+
+    &__title {
+        color: $cor-destaque-ciano;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        font-size: 1rem;
+
+        @media (min-width: 768px) {
+            font-size: 1.1rem;
+        }
+    }
+
+    &__phrase {
+        color: $cor-texto-secundario-claro;
+        font-size: 0.875rem;
+        margin-bottom: 0.5rem;
+
+        @media (min-width: 768px) {
+            font-size: 0.95rem;
+        }
+    }
+
+    &__copyright {
+        color: $cor-texto-mutado-escuro;
+        font-size: 0.75rem;
+        margin-bottom: 0;
+
+        @media (min-width: 768px) {
+            font-size: 0.8rem;
+        }
+    }
+}

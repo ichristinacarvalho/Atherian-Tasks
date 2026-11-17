@@ -1,0 +1,30 @@
+//Reset
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+//Html
+html {
+    scroll-behavior: smooth;
+}
+
+//Body
+body {
+    font-family: $fonte-padrao;
+    background: $cor-fundo-principal;
+    background-image:
+        radial-gradient(circle at 20% 15%, $cor-fundo-secundario 0%, $cor-fundo-principal 70%);
+    background-attachment: fixed;
+    color: $cor-texto-claro;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+//Títulos
+h1,
+h2 {
+    font-weight: 700;
+    line-height: 1.2;
+}

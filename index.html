@@ -25,11 +25,11 @@
 <body>
 
     <!-- BARRA SUPERIOR DE AUTENTICAÇÃO -->
-    <nav class="py-2 px-3 border-bottom">
+    <nav class="topbar py-2 px-3 border-bottom">
         <div class="container d-flex justify-content-between align-items-center">
 
             <a href="#home">
-                <img class="logo" alt="Athera Code" src="./images/Icon AC.png">
+                <img class="topbar__logo" alt="Athera Code" src="./images/Icon AC.png">
             </a>
 
             <!-- Status do usuário e botões no canto direito -->
@@ -37,6 +37,7 @@
                 <div id="info-usuario" class="d-flex align-items-center gap-2">
                     <span class="text-secondary small">Sessão não iniciada</span>
                 </div>
+
                 <div>
                     <button id="btn-login" class="btn btn-sm btn-outline-info">Entrar com Google</button>
                     <button id="btn-logout" class="btn btn-sm btn-outline-danger d-none">Sair</button>
@@ -45,43 +46,58 @@
         </div>
     </nav>
 
-    <!-- Partículas -->
-    <header class="text-center" id="home">
+    <!-- Header -->
+    <header class="hero text-center" id="home">
 
-        <div class="particulas" aria-hidden="true">
-            <span class="particula"></span>
-            <span class="particula"></span>
-            <span class="particula"></span>
-            <span class="particula"></span>
-            <span class="particula"></span>
-            <span class="particula"></span>
-            <span class="particula"></span>
-            <span class="particula"></span>
-            <span class="particula"></span>
+        <h1 class="hero__title">Atherian Tasks</h1>
 
-        </div>
-
-        <h1>Atherian Tasks</h1>
-
-        <p>Suba de nível na vida real, uma tarefa por vez.</p>
+        <p class="hero__subtitle">Suba de nível na vida real, uma tarefa por vez.</p>
     </header>
 
-    <main class="container my-5">
+    <!-- Main-->
+    <main class="guild container my-5">
 
-        <section id="forja-missoes" class="mb-5">
-            <form id="forja" class="card p-4 shadow-sm border-0">
+        <!-- Painel -->
+<section class="status-panel container mt-4 mb-5">
+    <div class="row text-center p-3" style="background-color: var(--cor-fundo-cards); border: 1px solid var(--cor-borda-escura); border-radius: 12px;">
+        
+        <!-- Nível -->
+        <div class="col-4">
+            <div class="text-secondary small text-uppercase fw-bold" style="letter-spacing: 1px;">Nível</div>
+            <div id="status-nivel" class="fs-2 fw-bold" style="color: var(--cor-destaque-ciano);">1</div>
+        </div>
 
-                <h2 class="mb-4 text-center">Balcão da Guilda</h2>
+        <!-- Experiência (XP) -->
+        <div class="col-4 border-start border-end border-secondary">
+            <div class="text-secondary small text-uppercase fw-bold" style="letter-spacing: 1px;">Experiência</div>
+            <div class="fs-3 fw-bold text-light mt-1">
+                <span id="status-xp-atual">0</span> <span class="text-secondary fs-5">/</span> <span id="status-xp-proximo" class="text-secondary fs-5">100</span>
+            </div>
+        </div>
+
+        <!-- Pontos de Vida (HP) -->
+        <div class="col-4">
+            <div class="text-secondary small text-uppercase fw-bold" style="letter-spacing: 1px;">Vitalidade</div>
+            <div id="status-hp" class="fs-2 fw-bold text-danger">100</div>
+        </div>
+
+    </div>
+</section>
+
+        <section id="forja-missoes" class="forge mb-5">
+            <form id="forja" class="forge__form card p-4 shadow-sm border-0">
+
+                <h2 class="forge__title mb-4 text-center">Balcão da Guilda</h2>
 
                 <div class="mb-3">
-                    <label for="missao" class="form-label fw-bold">Missão:</label>
-                    <input type="text" class="form-control" id="missao" name="missao" required
+                    <label for="missao" class="forge__label form-label fw-bold">Missão:</label>
+                    <input type="text" class="forge__input form-control" id="missao" name="missao" required
                         placeholder="ex: Derrotar o Boss do semestre">
                 </div>
 
-                <div class="mb-3">
-                    <label for="dificuldade" class="form-label fw-bold">Dificuldade:</label>
-                    <select class="form-select" name="dificuldade" id="dificuldade" required>
+                <div class="forge__container mb-3">
+                    <label for="dificuldade" class="forge__label form-label fw-bold">Dificuldade:</label>
+                    <select class="forge__select form-select" name="dificuldade" id="dificuldade" required>
                         <option value="" selected disabled>Selecione a dificuldade</option>
                         <option value="comum">Comum</option>
                         <option value="raro">Raro</option>
@@ -89,9 +105,9 @@
                     </select>
                 </div>
 
-                <div class="mb-3">
-                    <label for="categoria" class="form-label fw-bold">Categoria:</label>
-                    <select class="form-select" name="categoria" id="categoria" required>
+                <div class="forge__container mb-3">
+                    <label for="categoria" class="forge__label form-label fw-bold">Categoria:</label>
+                    <select class="forge__select form-select" name="categoria" id="categoria" required>
                         <option value="" selected disabled>Selecione a categoria</option>
                         <option value="guerreiro">Guerreiro (tarefas físicas/esportes)</option>
                         <option value="mago">Mago (estudos/foco)</option>
@@ -100,23 +116,24 @@
                     </select>
                 </div>
 
-                <button type="submit" class="btn w-100 fw-bold py-2">Criar missão</button>
+                <button type="submit" class="forge__button btn w-100 fw-bold py-2">Criar missão</button>
             </form>
         </section>
 
-        <section id="mural-missoes">
+        <section id="mural-missoes" class="board">
 
-            <h2 class="mb-4 border-bottom pb-2 text-center">Mural de missões</h2>
-            <div class="row" id="area-cards"></div>
+            <h2 class="board__title mb-4 border-bottom pb-2 text-center">Mural de missões</h2>
+            <div class="board__container row" id="area-cards"></div>
         </section>
     </main>
 
-    <footer class="text-center">
-        <p>Atherian Tasks</p>
+    <!-- Footer-->
+    <footer class="final text-center">
+        <p class="final__title">Atherian Tasks</p>
 
-        <p>A jornada é longa, mas a recompensa vale a pena. Continue jogando.</p>
+        <p class="final__phrase">A jornada é longa, mas a recompensa vale a pena. Continue jogando.</p>
 
-        <p>© 2026 Atherian Tasks</p>
+        <p class="final__copyright">© 2026 Atherian Tasks</p>
     </footer>
 
     <!--bootstrap JS-->
