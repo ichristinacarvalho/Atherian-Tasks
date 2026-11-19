@@ -24,117 +24,194 @@
 
 <body>
 
-    <!-- BARRA SUPERIOR DE AUTENTICAÇÃO -->
-    <nav class="topbar py-2 px-3 border-bottom">
-        <div class="container d-flex justify-content-between align-items-center">
+    <!--Tela inicial-->
+    <div class="landing-view" id="landing-view">
 
-            <a href="#home">
-                <img class="topbar__logo" alt="Athera Code" src="./images/Icon AC.png">
-            </a>
+        <div class="particulas" aria-hidden="true">
+            <span class="particula"></span>
+            <span class="particula"></span>
+            <span class="particula"></span>
+            <span class="particula"></span>
+            <span class="particula"></span>
+            <span class="particula"></span>
+            <span class="particula"></span>
+            <span class="particula"></span>
+            <span class="particula"></span>
+            <span class="particula"></span>
+            <span class="particula"></span>
+            <span class="particula"></span>
+        </div>
 
-            <!-- Status do usuário e botões no canto direito -->
-            <div class="d-flex align-items-center gap-3">
-                <div id="info-usuario" class="d-flex align-items-center gap-2">
-                    <span class="text-secondary small">Sessão não iniciada</span>
-                </div>
+        <!-- BARRA SUPERIOR DE AUTENTICAÇÃO -->
+        <nav class="topbar py-2 px-3 border-bottom">
+            <div class="container d-flex justify-content-between align-items-center">
 
-                <div>
-                    <button id="btn-login" class="btn btn-sm btn-outline-info">Entrar com Google</button>
-                    <button id="btn-logout" class="btn btn-sm btn-outline-danger d-none">Sair</button>
+                <a href="#home-landing">
+                    <img class="topbar__logo" alt="Athera Code" src="./images/Icon AC.png">
+                </a>
+
+                <!-- Apenas o botão de login -->
+                <div class="d-flex align-items-center gap-3">
+                    <button id="btn-login" class="btn btn-sm btn-outline-info js-btn-login">Entrar com Google</button>
                 </div>
             </div>
-        </div>
-    </nav>
+        </nav>
 
-    <!-- Header -->
-    <header class="hero text-center" id="home">
+        <!-- Header -->
+        <header class="hero text-center" id="home">
+            <h1 class="hero__title">Atherian Tasks</h1>
+            <p class="hero__subtitle">Suba de nível na vida real, uma tarefa por vez.</p>
+            <button type="button" class="hero__cta js-btn-login">Iniciar Jornada</button>
+        </header>
 
-        <h1 class="hero__title">Atherian Tasks</h1>
+        <!--Descrição-->
+        <section class="container my-5 features">
 
-        <p class="hero__subtitle">Suba de nível na vida real, uma tarefa por vez.</p>
-    </header>
+            <h2 class="mb-4 text-center">Como funciona a Guilda:</h2>
 
-    <!-- Main-->
-    <main class="guild container my-5">
+            <div class="row g-4">
 
-        <!-- Painel -->
-<section class="status-panel container mt-4 mb-5">
-    <div class="row text-center p-3" style="background-color: var(--cor-fundo-cards); border: 1px solid var(--cor-borda-escura); border-radius: 12px;">
-        
-        <!-- Nível -->
-        <div class="col-4">
-            <div class="text-secondary small text-uppercase fw-bold" style="letter-spacing: 1px;">Nível</div>
-            <div id="status-nivel" class="fs-2 fw-bold" style="color: var(--cor-destaque-ciano);">1</div>
-        </div>
+                <div class="col-12 col-md-4">
+                    <div class="feature-card card h-100 p-4">
+                        <div class="feature-card__icon" aria-hidden="true">⚔️</div>
+                        <h3 class="feature-card__title">Missões Épicas</h3>
+                        <p class="feature-card__text">Transforme tarefas comuns em missões épicas. Defina a
+                            dificuldade entre <strong>Comum, Raro ou Lendário</strong> e organize sua rotina no Balcão
+                            da Guilda.</p>
+                    </div>
+                </div>
 
-        <!-- Experiência (XP) -->
-        <div class="col-4 border-start border-end border-secondary">
-            <div class="text-secondary small text-uppercase fw-bold" style="letter-spacing: 1px;">Experiência</div>
-            <div class="fs-3 fw-bold text-light mt-1">
-                <span id="status-xp-atual">0</span> <span class="text-secondary fs-5">/</span> <span id="status-xp-proximo" class="text-secondary fs-5">100</span>
+                <div class="col-12 col-md-4">
+                    <div class="feature-card card h-100 p-4">
+                        <div class="feature-card__icon" aria-hidden="true">⚡</div>
+                        <h3 class="feature-card__title">Evolução e XP</h3>
+                        <p class="feature-card__text">Cada missão concluída garante <strong>pontos de experiência (XP)</strong>.
+                            Acompanhe sua barra de progresso subir e alcance novos níveis conforme mantém a constância.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <div class="feature-card card h-100 p-4">
+                        <div class="feature-card__icon" aria-hidden="true">🛡️</div>
+                        <h3 class="feature-card__title">Classes e Atributos</h3>
+                        <p class="feature-card__text">Suas ações definem quem você é. Mostre que consegue gerenciar
+                            todos esses guerreiros e <strong>seja o guardião da guilda!</strong> Ganhe pontos de Guerreiro nos treinos,
+                            Mago nos estudos, Ladino nas tarefas de casa e Clérigo no autocuidado.</p>
+                    </div>
+                </div>
             </div>
-        </div>
-
-        <!-- Pontos de Vida (HP) -->
-        <div class="col-4">
-            <div class="text-secondary small text-uppercase fw-bold" style="letter-spacing: 1px;">Vitalidade</div>
-            <div id="status-hp" class="fs-2 fw-bold text-danger">100</div>
-        </div>
-
+        </section>
     </div>
-</section>
 
-        <section id="forja-missoes" class="forge mb-5">
-            <form id="forja" class="forge__form card p-4 shadow-sm border-0">
+    <!--Tela das missões-->
+    <div class="app-view d-none" id="app-view">
+        <!-- BARRA SUPERIOR DE NAVEGAÇÃO -->
+        <nav class="topbar py-2 px-3 border-bottom">
+            <div class="container d-flex justify-content-between align-items-center">
 
-                <h2 class="forge__title mb-4 text-center">Balcão da Guilda</h2>
+                <a href="#home-app">
+                    <img class="topbar__logo" alt="Athera Code" src="./images/Icon AC.png">
+                </a>
 
-                <div class="mb-3">
-                    <label for="missao" class="forge__label form-label fw-bold">Missão:</label>
-                    <input type="text" class="forge__input form-control" id="missao" name="missao" required
-                        placeholder="ex: Derrotar o Boss do semestre">
+                <!-- Status do usuário (preenchido pelo JS) e botão Sair -->
+                <div class="d-flex align-items-center gap-3">
+                    <div id="info-usuario" class="d-flex align-items-center gap-2"></div>
+
+                    <div>
+                        <button id="btn-logout" class="btn btn-sm btn-outline-danger">Sair</button>
+                    </div>
                 </div>
+            </div>
+        </nav>
 
-                <div class="forge__container mb-3">
-                    <label for="dificuldade" class="forge__label form-label fw-bold">Dificuldade:</label>
-                    <select class="forge__select form-select" name="dificuldade" id="dificuldade" required>
-                        <option value="" selected disabled>Selecione a dificuldade</option>
-                        <option value="comum">Comum</option>
-                        <option value="raro">Raro</option>
-                        <option value="lendario">Lendário</option>
-                    </select>
+        <!-- Main-->
+        <main class="guild container my-5">
+
+            <!-- Painel -->
+            <section class="status-panel container mt-4 mb-5">
+                <div class="row text-center p-3"
+                    style="background-color: var(--cor-fundo-cards); border: 1px solid var(--cor-borda-escura); border-radius: 12px;">
+
+                    <!-- Nível -->
+                    <div class="col-4">
+                        <div class="text-secondary small text-uppercase fw-bold" style="letter-spacing: 1px;">Nível
+                        </div>
+                        <div id="status-nivel" class="fs-2 fw-bold" style="color: var(--cor-destaque-ciano);">1</div>
+                    </div>
+
+                    <!-- Experiência (XP) -->
+                    <div class="col-4 border-start border-end border-secondary">
+                        <div class="text-secondary small text-uppercase fw-bold" style="letter-spacing: 1px;">
+                            Experiência</div>
+                        <div class="fs-3 fw-bold text-light mt-1">
+                            <span id="status-xp-atual">0</span> <span class="text-secondary fs-5">/</span> <span
+                                id="status-xp-proximo" class="text-secondary fs-5">100</span>
+                        </div>
+                    </div>
+
+                    <!-- Pontos de Vida (HP) -->
+                    <div class="col-4">
+                        <div class="text-secondary small text-uppercase fw-bold" style="letter-spacing: 1px;">Vitalidade
+                        </div>
+                        <div id="status-hp" class="fs-2 fw-bold text-danger">100</div>
+                    </div>
+
                 </div>
+            </section>
 
-                <div class="forge__container mb-3">
-                    <label for="categoria" class="forge__label form-label fw-bold">Categoria:</label>
-                    <select class="forge__select form-select" name="categoria" id="categoria" required>
-                        <option value="" selected disabled>Selecione a categoria</option>
-                        <option value="guerreiro">Guerreiro (tarefas físicas/esportes)</option>
-                        <option value="mago">Mago (estudos/foco)</option>
-                        <option value="ladino">Ladino (tarefas domésticas/furtivas)</option>
-                        <option value="clerigo">Clérigo (autocuidado/saúde)</option>
-                    </select>
-                </div>
+            <section id="forja-missoes" class="forge mb-5">
+                <form id="forja" class="forge__form card p-4 shadow-sm border-0">
 
-                <button type="submit" class="forge__button btn w-100 fw-bold py-2">Criar missão</button>
-            </form>
-        </section>
+                    <h2 class="forge__title mb-4 text-center">Balcão da Guilda</h2>
 
-        <section id="mural-missoes" class="board">
+                    <div class="mb-3">
+                        <label for="missao" class="forge__label form-label fw-bold">Missão:</label>
+                        <input type="text" class="forge__input form-control" id="missao" name="missao" required
+                            placeholder="ex: Derrotar o Boss do semestre">
+                    </div>
 
-            <h2 class="board__title mb-4 border-bottom pb-2 text-center">Mural de missões</h2>
-            <div class="board__container row" id="area-cards"></div>
-        </section>
-    </main>
+                    <div class="forge__container mb-3">
+                        <label for="dificuldade" class="forge__label form-label fw-bold">Dificuldade:</label>
+                        <select class="forge__select form-select" name="dificuldade" id="dificuldade" required>
+                            <option value="" selected disabled>Selecione a dificuldade</option>
+                            <option value="comum">Comum</option>
+                            <option value="raro">Raro</option>
+                            <option value="lendario">Lendário</option>
+                        </select>
+                    </div>
 
-    <!-- Footer-->
-    <footer class="final text-center">
-        <p class="final__title">Atherian Tasks</p>
+                    <div class="forge__container mb-3">
+                        <label for="categoria" class="forge__label form-label fw-bold">Categoria:</label>
+                        <select class="forge__select form-select" name="categoria" id="categoria" required>
+                            <option value="" selected disabled>Selecione a categoria</option>
+                            <option value="guerreiro">Guerreiro (tarefas físicas/esportes)</option>
+                            <option value="mago">Mago (estudos/foco)</option>
+                            <option value="ladino">Ladino (tarefas domésticas/furtivas)</option>
+                            <option value="clerigo">Clérigo (autocuidado/saúde)</option>
+                        </select>
+                    </div>
 
-        <p class="final__phrase">A jornada é longa, mas a recompensa vale a pena. Continue jogando.</p>
+                    <button type="submit" class="forge__button btn w-100 fw-bold py-2">Criar missão</button>
+                </form>
+            </section>
 
-        <p class="final__copyright">© 2026 Atherian Tasks</p>
-    </footer>
+            <section id="mural-missoes" class="board">
+
+                <h2 class="board__title mb-4 border-bottom pb-2 text-center">Mural de missões</h2>
+                <div class="board__container row" id="area-cards"></div>
+            </section>
+        </main>
+
+        <!-- Footer-->
+        <footer class="final text-center">
+            <p class="final__title">Atherian Tasks</p>
+
+            <p class="final__phrase">A jornada é longa, mas a recompensa vale a pena. Continue jogando.</p>
+
+            <p class="final__copyright">© 2026 Atherian Tasks</p>
+        </footer>
+    </div>
 
     <!--bootstrap JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>

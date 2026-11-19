@@ -1,31 +1,53 @@
 // PALETA DE CORES
-    /* Cores de Fundo (Escuros) */
-    $cor-fundo-principal: #0A1317;
-    $cor-fundo-secundario: #14353E;
-    $cor-fundo-cards: #0D1F24;
+/* Cores de Fundo (Escuros) */
+$cor-fundo-principal: #0A1317;
+$cor-fundo-secundario: #14353E;
+$cor-fundo-cards: #0D1F24;
 
-    /* Cores de Fundo (Claros - para contraste) */
-    $cor-fundo-claro: #EEF3F2;
-    $cor-fundo-branco: #FFFFFF;
+/* Cores de Fundo (Claros - para contraste) */
+$cor-fundo-claro: #EEF3F2;
+$cor-fundo-branco: #FFFFFF;
 
-    /* Cores de Destaque */
-    $cor-destaque-ciano: #41EAD4;
-    $cor-destaque-ciano-claro: #80FFDB;
-    $cor-destaque-roxo: #A06CD5;
-    $cor-destaque-roxo-escuro: #6E44FF;
+/* Cores de Destaque */
+$cor-destaque-ciano: #41EAD4;
+$cor-destaque-ciano-claro: #80FFDB;
+$cor-destaque-roxo: #A06CD5;
+$cor-destaque-roxo-escuro: #6E44FF;
 
-    /* Textos Clientes (Para fundos escuros) */
-    $cor-texto-claro: #E2E8F0;
-    $cor-texto-mutado-claro: #CBD5E1;
-    $cor-texto-secundario-claro: #94A3B8;
+/* Textos Clientes (Para fundos escuros) */
+$cor-texto-claro: #E2E8F0;
+$cor-texto-mutado-claro: #CBD5E1;
+$cor-texto-secundario-claro: #94A3B8;
 
-    /* Textos Escuros (Para fundos claros) */
-    $cor-texto-escuro: #334155;
-    $cor-texto-mutado-escuro: #64748B;
+/* Textos Escuros (Para fundos claros) */
+$cor-texto-escuro: #334155;
+$cor-texto-mutado-escuro: #64748B;
 
-    /* Bordas e Detalhes */
-    $cor-borda-escura: #1E4E5B;
-    $cor-borda-clara: #D5DEDC;
+/* Bordas e Detalhes */
+$cor-borda-escura: #1E4E5B;
+$cor-borda-clara: #D5DEDC;
+
+// Sombras reutilizáveis
+$glow-ciano: 0 0 8px rgba(65, 234, 212, 0.5);
+$glow-roxo: 0 0 10px rgba(160, 108, 213, 0.6);
+$glow-roxo-forte: 0 0 12px rgba(160, 108, 213, 0.6);
+$glow-roxo-escuro: 0 0 12px rgba(110, 68, 255, 0.6);
+$glow-branco: 0 0 12px rgba(255, 255, 255, 0.8);
+
+// Lista de configurações: (indice, cor, sombra, tamanho, top, left, duracao, animacao)
+$config-particulas: (
+    (2, $cor-destaque-roxo, $glow-roxo, 5px, 60%, 30%, 8s, flutuar-esquerda),
+    (3, $cor-fundo-branco, $glow-branco, 10px, 40%, 70%, 12s, flutuar-baixo),
+    (4, $cor-destaque-ciano-claro, $glow-ciano, 4px, 80%, 50%, 6s, flutuar-cima-esquerda),
+    (5, $cor-destaque-roxo-escuro, $glow-roxo-escuro, 7px, 20%, 10%, 17s, flutuar),
+    (6, $cor-destaque-ciano, $glow-ciano, 3px, 50%, 60%, 5s, flutuar-esquerda),
+    (7, $cor-destaque-roxo, $glow-roxo-forte, 9px, 80%, 40%, 8s, flutuar-baixo),
+    (8, $cor-texto-claro, $glow-ciano, 3px, 90%, 70%, 6s, flutuar-cima-esquerda),
+    (9, $cor-destaque-ciano-claro, $glow-ciano, 4px, 10%, 80%, 6s, flutuar-cima-esquerda),
+    (10, #6E44FF, $glow-ciano, 7px, 30%, 30%, 17s, flutuar),
+    (11, #41EAD4, $glow-ciano, 6px, 15%, 55%, 9s, flutuar-esquerda),
+    (12, #A06CD5, $glow-roxo, 5px, 65%, 85%, 11s, flutuar)
+);
 
 // FONTES 
-    $fonte-padrao: 'Plus Jakarta Sans', Arial, Helvetica, sans-serif;
+$fonte-padrao: 'Plus Jakarta Sans', Arial, Helvetica, sans-serif;

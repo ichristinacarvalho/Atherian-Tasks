@@ -159,24 +159,31 @@ function gerenciarAcoesMural() {
         }
     });
 }
+
 //--- gerenciando a autenticação de usuário
 function gerenciarAutenticacao() {
-    let login = document.getElementById("btn-login");
+    let landingView = document.getElementById("landing-view");
+    let appView = document.getElementById("app-view");
+    let botoesLogin = document.querySelectorAll(".js-btn-login");
     let btnLogout = document.getElementById("btn-logout");
     let infoUsuario = document.getElementById("info-usuario");
     let provedorGoogle = new GoogleAuthProvider();
 
-    //clique para abrir o pop-up
-    login.addEventListener("click", async function () {
+    // Função única para abrir o pop-up do Google
+    async function fazerLoginGoogle() {
         try {
             await signInWithPopup(auth, provedorGoogle);
             console.log("Login realizado com sucesso!");
         } catch (erro) {
             console.error("Erro ao fazer login:", erro);
         }
+    }
+
+    botoesLogin.forEach((botao) => {
+        botao.addEventListener("click", fazerLoginGoogle);
     });
 
-    //Ação de Sair
+    // Ação de Sair
     btnLogout.addEventListener("click", async function () {
         try {
             await signOut(auth);
@@ -186,41 +193,43 @@ function gerenciarAutenticacao() {
         }
     });
 
-    //atualiza a interface automaticamente
+    // Atualiza a interface automaticamente
     onAuthStateChanged(auth, async (usuario) => {
         if (usuario) {
             // Coloca a foto redondinha e o nome na barra superior
             infoUsuario.innerHTML = `
-            <img src="${usuario.photoURL}" alt="${usuario.displayName}" class="rounded-circle" width="30" height="30" style="border: 2px solid var(--destaque-ciano);">
-            <span class="small fw-semibold text-light">${usuario.displayName}</span>
-        `;
+                <img src="${usuario.photoURL}" alt="${usuario.displayName}" class="rounded-circle" width="30" height="30" style="border: 2px solid var(--destaque-ciano);">
+                <span class="small fw-semibold text-light">${usuario.displayName}</span>
+            `;
 
-            //Verifica ou cria a ficha primeiro
+            // Verifica ou cria a ficha primeiro
             await verificarOuCriarPerfil(usuario);
             carregarStatus(usuario.uid);
 
-            //lista as missões
+            // Lista as missões
             listarMissoes(usuario.uid);
 
-            // Esconde o botão "Entrar" e mostra o botão "Sair"
-            login.classList.add("d-none");
-            btnLogout.classList.remove("d-none");
+            // Troca para a tela da aplicação
+            landingView.classList.add("d-none");
+            appView.classList.remove("d-none");
 
         } else {
             // Se NÃO tem ninguém logado (ou se deslogou):
-            infoUsuario.innerHTML = `<span class="text-secondary small">Sessão não iniciada</span>`;
+            infoUsuario.innerHTML = "";
             document.getElementById("area-cards").innerHTML = "";
 
             // Desliga a escuta se houver alguma rodando
             if (desinscreverMural) {
                 desinscreverMural();
             }
-            // Mostra o botão "Entrar" e esconde o botão "Sair"
-            login.classList.remove("d-none");
-            btnLogout.classList.add("d-none");
+
+            // Volta para a tela inicial (Landing)
+            landingView.classList.remove("d-none");
+            appView.classList.add("d-none");
         }
     });
 }
+
 
 //chamando eventos
 missoes();
