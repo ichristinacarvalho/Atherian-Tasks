@@ -38,7 +38,10 @@ export function carregarStatus(uid) {
         document.getElementById("status-xp-atual").textContent = dados.xpAtual;
         document.getElementById("status-xp-proximo").textContent = dados.xpProximo;
         document.getElementById("status-hp").textContent = dados.hp;
-
+        document.getElementById("attr-guerreiro").textContent = dados.atributos?.guerreiro || 0;
+        document.getElementById("attr-mago").textContent = dados.atributos?.mago || 0;
+        document.getElementById("attr-ladino").textContent = dados.atributos?.ladino || 0;
+        document.getElementById("attr-clerigo").textContent = dados.atributos?.clerigo || 0;
     });
 }
 
@@ -73,14 +76,14 @@ export async function ganharRecompensa(uid, dificuldade, categoria) {
         console.log("🎉 LEVEL UP!");
     }
 
-    // Descobre quanto o jogador já tem no atributo da categoria da missão e soma +1
-    let atributoAtualizado = dados.atributos[categoria] + 1;
+    let categoriaFormatada = categoria.toLowerCase();
 
-    // Atualiza todos os dados no Firestore
+    let atributoAtualizado = (dados.atributos?.[categoriaFormatada] || 0) + 1;
+
     await updateDoc(refPlayer, {
         xpAtual: novoXp,
         nivel: novoNivel,
         xpProximo: novoXpProximo,
-        [`atributos.${categoria}`]: atributoAtualizado
+        [`atributos.${categoriaFormatada}`]: atributoAtualizado
     });
 }

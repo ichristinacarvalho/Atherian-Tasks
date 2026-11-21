@@ -85,7 +85,8 @@
                     <div class="feature-card card h-100 p-4">
                         <div class="feature-card__icon" aria-hidden="true">⚡</div>
                         <h3 class="feature-card__title">Evolução e XP</h3>
-                        <p class="feature-card__text">Cada missão concluída garante <strong>pontos de experiência (XP)</strong>.
+                        <p class="feature-card__text">Cada missão concluída garante <strong>pontos de experiência
+                                (XP)</strong>.
                             Acompanhe sua barra de progresso subir e alcance novos níveis conforme mantém a constância.
                         </p>
                     </div>
@@ -96,7 +97,8 @@
                         <div class="feature-card__icon" aria-hidden="true">🛡️</div>
                         <h3 class="feature-card__title">Classes e Atributos</h3>
                         <p class="feature-card__text">Suas ações definem quem você é. Mostre que consegue gerenciar
-                            todos esses guerreiros e <strong>seja o guardião da guilda!</strong> Ganhe pontos de Guerreiro nos treinos,
+                            todos esses guerreiros e <strong>seja o guardião da guilda!</strong> Ganhe pontos de
+                            Guerreiro nos treinos,
                             Mago nos estudos, Ladino nas tarefas de casa e Clérigo no autocuidado.</p>
                     </div>
                 </div>
@@ -118,8 +120,10 @@
                 <div class="d-flex align-items-center gap-3">
                     <div id="info-usuario" class="d-flex align-items-center gap-2"></div>
 
-                    <div>
-                        <button id="btn-logout" class="btn btn-sm btn-outline-danger">Sair</button>
+                    <div class="d-flex align-items-center gap-3">
+                        <button id="ficha" type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="offcanvas"
+                            data-bs-target="#ficha-personagem">Ficha do personagem</button>
+                        <button id="btn-logout" type="button" class="btn btn-sm btn-outline-danger">Sair</button>
                     </div>
                 </div>
             </div>
@@ -192,6 +196,15 @@
                         </select>
                     </div>
 
+                    <div class="forge__container mb-3">
+                        <label class="forge__label form-label fw-bold" for="frequencia">Frequência:</label>
+                        <select class="forge__select form-select" name="frequencia" id="frequencia" required>
+                            <option value="unica">Única</option>
+                            <option value="diaria">Diária</option>
+                            <option value="semanal">Semanal</option>
+                        </select>
+                    </div>
+
                     <button type="submit" class="forge__button btn w-100 fw-bold py-2">Criar missão</button>
                 </form>
             </section>
@@ -199,9 +212,96 @@
             <section id="mural-missoes" class="board">
 
                 <h2 class="board__title mb-4 border-bottom pb-2 text-center">Mural de missões</h2>
+
+                <!--Filtro do mural-->
+                <div class="d-flex gap-3 mb-4">
+
+                    <!--Filtro de frequência-->
+                    <div class="w-100">
+                        <label for="filtro-frequencia">🔄 Frequência</label>
+                        <select name="filtro-frequencia" id="filtro-frequencia" class="forge__select form-select">
+                            <option value="todas">Todas as frequências</option>
+                            <option value="unica">Únicas</option>
+                            <option value="diaria">Diárias</option>
+                            <option value="semanal">Semanais</option>
+                        </select>
+                    </div>
+
+                    <!--Filtro de status-->
+                    <div class="w-100">
+                        <label for="filtro-status">📌 Status</label>
+                        <select name="filtro-status" id="filtro-status" class="forge__select form-select">
+                            <option value="todos">Todos os status</option>
+                            <option value="pendentes">Pendentes</option>
+                            <option value="execucao">Em execução</option>
+                            <option value="concluidos">Concluídas</option>
+                        </select>
+                    </div>
+                </div>
+
                 <div class="board__container row" id="area-cards"></div>
             </section>
         </main>
+
+        <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="ficha-personagem"
+            aria-labelledby="ficha-personagem-label"
+            style="background-color: var(--cor-fundo-cards) !important; border-left: 1px solid var(--cor-borda-escura);">
+
+            <div class="offcanvas-header border-bottom border-secondary">
+                <h5 class="offcanvas-title fw-bold" id="ficha-personagem-label"
+                    style="color: var(--cor-destaque-ciano);">
+                    🛡️ Ficha do Guardião
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+                    aria-label="Fechar"></button>
+            </div>
+
+            <div class="offcanvas-body d-flex flex-column gap-3">
+                <p class="text-secondary small mb-2">
+                    Seus atributos evoluem automaticamente conforme você conclui missões de cada categoria.
+                </p>
+
+                <!-- Guerreiro / Força -->
+                <div class="p-3 rounded d-flex justify-content-between align-items-center"
+                    style="background-color: rgba(255, 255, 255, 0.03); border: 1px solid var(--cor-borda-escura);">
+                    <div>
+                        <div class="fw-bold text-light">⚔️ Guerreiro</div>
+                        <div class="small text-secondary">Força &amp; Treinos</div>
+                    </div>
+                    <span id="attr-guerreiro" class="fs-3 fw-bold text-danger">0</span>
+                </div>
+
+                <!-- Mago / Inteligência -->
+                <div class="p-3 rounded d-flex justify-content-between align-items-center"
+                    style="background-color: rgba(255, 255, 255, 0.03); border: 1px solid var(--cor-borda-escura);">
+                    <div>
+                        <div class="fw-bold text-light">🔮 Mago</div>
+                        <div class="small text-secondary">Inteligência &amp; Estudos</div>
+                    </div>
+                    <span id="attr-mago" class="fs-3 fw-bold text-info">0</span>
+                </div>
+
+                <!-- Ladino / Destreza -->
+                <div class="p-3 rounded d-flex justify-content-between align-items-center"
+                    style="background-color: rgba(255, 255, 255, 0.03); border: 1px solid var(--cor-borda-escura);">
+                    <div>
+                        <div class="fw-bold text-light">🗡️ Ladino</div>
+                        <div class="small text-secondary">Destreza &amp; Tarefas de Casa</div>
+                    </div>
+                    <span id="attr-ladino" class="fs-3 fw-bold text-light">0</span>
+                </div>
+
+                <!-- Clérigo / Sabedoria -->
+                <div class="p-3 rounded d-flex justify-content-between align-items-center"
+                    style="background-color: rgba(255, 255, 255, 0.03); border: 1px solid var(--cor-borda-escura);">
+                    <div>
+                        <div class="fw-bold text-light">✨ Clérigo</div>
+                        <div class="small text-secondary">Sabedoria &amp; Autocuidado</div>
+                    </div>
+                    <span id="attr-clerigo" class="fs-3 fw-bold text-warning">0</span>
+                </div>
+            </div>
+        </div>
 
         <!-- Footer-->
         <footer class="final text-center">
